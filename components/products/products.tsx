@@ -9,6 +9,7 @@ import { useLanguage } from "@/components/language-provider"
 import { useSearchParams } from "next/navigation"
 import Header from "../header"
 import { ProductCard } from "./productsCard"
+import Footer from "../footer"
 
 export default function ProductsPage() {
   const searchParams = useSearchParams()
@@ -282,6 +283,8 @@ export default function ProductsPage() {
           </div>
         )}
       </div>
+      {/* Footer */}
+       <Footer/>
     </div>
   )
 }
