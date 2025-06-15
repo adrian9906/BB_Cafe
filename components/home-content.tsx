@@ -7,44 +7,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Coffee, Truck, Star, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import Footer from "./footer"
+import { ProductProps } from "@/app/products/page"
 
-export function HomeContent() {
+export function HomeContent({featuredProducts}:{featuredProducts:ProductProps[]}) {
   const { t } = useLanguage()
-  
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Cappuccino Clásico",
-      price: 4.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.8,
-      category: "coffee",
-    },
-    {
-      id: 2,
-      name: "Brownies de Chocolate",
-      price: 12.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.9,
-      category: "sweets",
-    },
-    {
-      id: 3,
-      name: "Latte Vainilla",
-      price: 5.49,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.7,
-      category: "coffee",
-    },
-    {
-      id: 4,
-      name: "Cookies de Vainilla",
-      price: 8.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.6,
-      category: "sweets",
-    },
-  ]
 
   return (
     <>
@@ -72,6 +38,7 @@ export function HomeContent() {
                 >
                   <Link href="#delivery">{t("hero.free-delivery")}</Link>
                 </Button>
+                
               </div>
             </div>
             <div className="relative flex justify-center">
@@ -250,9 +217,9 @@ export function HomeContent() {
                 </p>
               </div>
             </div>
-            <div>
+            <div className="justify-end mx-auto items-end">
               <Image
-                src="/placeholder.svg?height=400&width=500"
+                src="/images/delivery.jpg"
                 alt="Delivery"
                 width={500}
                 height={400}

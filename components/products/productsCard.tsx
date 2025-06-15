@@ -7,29 +7,19 @@ import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { useState, useEffect } from "react"
-import { useCart } from "../cart/cart-provider"
 import { StarRating } from "./startRating"
-
-interface Product {
-  id: number
-  name: string
-  description: string
-  price: number
-  image: string
-  rating: number
-  category: string
-  featured: boolean
-}
+import { ProductProps } from "@/app/products/page"
+import { AddToCartModal } from "./addTocart"
 
 interface ProductCardProps {
-  product: Product
+  product: ProductProps
   index?: number
 }
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
-  const { addItem } = useCart()
   const { t } = useLanguage()
   const [userRating, setUserRating] = useState(0)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     // Cargar calificación del usuario desde localStorage
@@ -40,19 +30,14 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   }, [product.id])
 
   const handleAddToCart = () => {
-    addItem({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-    })
+    setIsModalOpen(true)
   }
-
   const handleRatingChange = (rating: number) => {
     setUserRating(rating)
   }
 
   return (
+    <div>
     <Card
       className="relative pb-14 group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
       style={{
@@ -107,5 +92,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </div>
       </CardContent>
     </Card>
+    <AddToCartModal product={product} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </div>
   )
 }

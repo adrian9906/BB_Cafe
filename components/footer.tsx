@@ -69,7 +69,7 @@ export default function Footer() {
               <div className="space-y-2 text-gray-300">
                 <p>📞 (555) 123-4567</p>
                 <p>📧 info@bbcafe.com</p>
-                <p>📍 Calle Principal 123</p>
+                <p>📍 3ra e/ b y c, Vedado, Plaza de la revolución</p>
               </div>
             </div>
           </div>

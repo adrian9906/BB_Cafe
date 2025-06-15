@@ -5,7 +5,7 @@ import { Star } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface StarRatingProps {
-  productId: number
+  productId: string
   initialRating?: number
   onRatingChange?: (rating: number) => void
   readonly?: boolean

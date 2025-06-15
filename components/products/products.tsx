@@ -6,163 +6,24 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Search, Filter } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Header from "../header"
 import { ProductCard } from "./productsCard"
 import Footer from "../footer"
+import { ProductProps } from "@/app/products/page"
+import { createUrl } from "@/lib/utils"
 
-export default function ProductsPage() {
+export default function ProductsPage({products}:{products:ProductProps[]}) {
   const searchParams = useSearchParams()
   const categoryFilter = searchParams.get("category")
   const { t } = useLanguage()
+  const router = useRouter()
 
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState(categoryFilter || "all")
   const [sortBy, setSortBy] = useState("name")
 
-  const products = [
-    {
-      id: 1,
-      name: "Cappuccino Clásico",
-      description: "Espresso con leche vaporizada y espuma cremosa",
-      price: 4.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.8,
-      category: "coffee",
-      featured: true,
-    },
-    {
-      id: 2,
-      name: "Latte Vainilla",
-      description: "Espresso con leche vaporizada y jarabe de vainilla",
-      price: 5.49,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.7,
-      category: "coffee",
-      featured: true,
-    },
-    {
-      id: 3,
-      name: "Americano",
-      description: "Espresso diluido con agua caliente",
-      price: 3.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.5,
-      category: "coffee",
-      featured: false,
-    },
-    {
-      id: 4,
-      name: "Mocha",
-      description: "Espresso con chocolate caliente y leche vaporizada",
-      price: 5.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.9,
-      category: "coffee",
-      featured: true,
-    },
-    {
-      id: 5,
-      name: "Caramel Macchiato",
-      description: "Espresso con leche vaporizada y jarabe de caramelo",
-      price: 6.49,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.8,
-      category: "coffee",
-      featured: true,
-    },
-    {
-      id: 6,
-      name: "Frappé de Café",
-      description: "Bebida fría de café con hielo y crema batida",
-      price: 6.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.6,
-      category: "coffee",
-      featured: false,
-    },
-    {
-      id: 7,
-      name: "Espresso Doble",
-      description: "Doble shot de espresso puro",
-      price: 3.49,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.4,
-      category: "coffee",
-      featured: false,
-    },
-    {
-      id: 8,
-      name: "Chai Latte",
-      description: "Té chai especiado con leche vaporizada",
-      price: 5.29,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.5,
-      category: "coffee",
-      featured: false,
-    },
-    {
-      id: 9,
-      name: "Brownies de Chocolate",
-      description: "Brownies caseros con chocolate belga",
-      price: 12.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.9,
-      category: "sweets",
-      featured: true,
-    },
-    {
-      id: 10,
-      name: "Cookies de Vainilla",
-      description: "Galletas artesanales con extracto de vainilla",
-      price: 8.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.6,
-      category: "sweets",
-      featured: false,
-    },
-    {
-      id: 11,
-      name: "Cheesecake de Fresa",
-      description: "Cheesecake cremoso con fresas frescas",
-      price: 18.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.8,
-      category: "sweets",
-      featured: true,
-    },
-    {
-      id: 12,
-      name: "Muffins de Arándanos",
-      description: "Muffins esponjosos con arándanos naturales",
-      price: 6.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.4,
-      category: "sweets",
-      featured: false,
-    },
-    {
-      id: 13,
-      name: "Tiramisu Clásico",
-      description: "El postre italiano más famoso",
-      price: 16.99,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.7,
-      category: "sweets",
-      featured: true,
-    },
-    {
-      id: 14,
-      name: "Croissant de Almendra",
-      description: "Croissant francés relleno de crema de almendra",
-      price: 4.49,
-      image: "/placeholder.svg?height=300&width=300",
-      rating: 4.5,
-      category: "sweets",
-      featured: false,
-    },
-  ]
-
+  
   const filteredProducts = useMemo(() => {
     return products
       .filter((product) => {
@@ -186,8 +47,20 @@ export default function ProductsPage() {
             return a.name.localeCompare(b.name)
         }
       })
-  }, [searchTerm, selectedCategory, sortBy])
-
+  }, [searchTerm, selectedCategory, sortBy, products])
+   function handleFilter (name:string, value: Date | string | null) {
+      const newParams = new URLSearchParams(searchParams.toString())
+        if (typeof value === 'string') {
+          if(name === 'category'){
+            setSelectedCategory(value)
+          }
+          if (name === 'sort'){
+            setSortBy(value)
+          }
+          newParams.set(name, value) 
+        }
+        router.push(createUrl('/products', newParams))
+      }
   return (
       <div className="max-h-screen bg-background">
       <Header />
@@ -211,7 +84,7 @@ export default function ProductsPage() {
             />
           </div>
 
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <Select value={selectedCategory} onValueChange={(value)=>handleFilter('category',value)}>
             <SelectTrigger className="py-5 px-4 text-md h-11 min-w-[220px]"> {/* Aumentado */}
                 <SelectValue placeholder={t("products.category")} />
                 </SelectTrigger>
@@ -225,11 +98,15 @@ export default function ProductsPage() {
                 <SelectItem value="sweets" className="text-md py-3">
                     {t("nav.sweets")}
                 </SelectItem>
+                <SelectItem value="drinks" className="text-md py-3">
+                    {t("nav.drinks")}
+                </SelectItem>
+                
                 </SelectContent>
             </Select>
 
             {/* Selector de orden - Aumentado */}
-            <Select value={sortBy} onValueChange={setSortBy}>
+            <Select value={sortBy} onValueChange={(value)=>handleFilter('sort',value)}>
                 <SelectTrigger className="py-5 px-4 text-md h-11 min-w-[220px]"> {/* Aumentado */}
                 <SelectValue placeholder={t("products.sort")} />
                 </SelectTrigger>

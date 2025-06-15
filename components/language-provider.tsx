@@ -35,7 +35,7 @@ const translations = {
     "features.artisan-drinks": "Bebidas",
     "features.artisan-description": "Capuchinos, lattes y más, preparados al momento con los mejores ingredientes",
     "features.fast-delivery": "Delivery Rápido",
-    "features.delivery-description": "Entrega en 30-45 minutos, gratis en compras mayores a $25",
+    "features.delivery-description": "Entrega en 30-45 minutos, gratis en compras mayores a 20 000 cup",
     "features.quality": "Calidad Garantizada",
     "features.quality-description": "Productos frescos y de la más alta calidad, satisfacción garantizada",
 
@@ -52,7 +52,7 @@ const translations = {
       "¿Tienes una ocasión especial? Creamos galletas decoradas, cupcakes y pasteles únicos para tus celebraciones.",
     "custom-orders.decorated-cookies": "Galletas decoradas para cualquier tema",
     "custom-orders.custom-cupcakes": "Cupcakes personalizados",
-    "custom-orders.special-cakes": "Tortas para eventos especiales",
+    "custom-orders.special-cakes": "Cakes para eventos especiales",
     "custom-orders.make-order": "Hacer un Encargo",
 
     // Delivery
@@ -63,7 +63,7 @@ const translations = {
     "delivery.step2-desc": "Nuestro equipo prepara cuidadosamente cada producto",
     "delivery.step3": "Entrega a Domicilio",
     "delivery.step3-desc": "Recibe tu pedido en 30-45 minutos, fresco y delicioso",
-    "delivery.free-info": "Delivery gratuito en pedidos mayores a $25. Costo de envío: $3.99 para pedidos menores.",
+    "delivery.free-info": "Delivery gratuito en pedidos mayores a 20 000 cup.",
 
     // Footer
     "footer.description": "Tu destino para las mejores bebidas de café y dulces gourmets con delivery rápido.",
@@ -120,10 +120,10 @@ const translations = {
     "nav.about": "About Us",
 
     // Home Page
-    "hero.title": "The Best Coffee Drinks and Sweets",
+    "hero.title": "The Best Coffee Drinks and Desserts",
     "hero.subtitle": "to your Door",
     "hero.description":
-      "Discover our artisan coffee drinks prepared fresh and gourmet desserts. Fast and secure delivery throughout the city.",
+      "Discover our coffee drinks prepared fresh and gourmet desserts. Fast and secure delivery throughout the city.",
     "hero.view-products": "View Products",
     "hero.free-delivery": "Free Delivery",
 
@@ -131,7 +131,7 @@ const translations = {
     "features.artisan-drinks": "Drinks",
     "features.artisan-description": "Cappuccinos, lattes and more, prepared fresh with the finest ingredients",
     "features.fast-delivery": "Fast Delivery",
-    "features.delivery-description": "Delivery in 30-45 minutes, free on orders over $25",
+    "features.delivery-description": "Delivery in 30-45 minutes, free on orders over $50",
     "features.quality": "Quality Guaranteed",
     "features.quality-description": "Fresh products of the highest quality, satisfaction guaranteed",
 
@@ -159,7 +159,7 @@ const translations = {
     "delivery.step2-desc": "Our team carefully prepares each product",
     "delivery.step3": "Home Delivery",
     "delivery.step3-desc": "Receive your order in 30-45 minutes, fresh and delicious",
-    "delivery.free-info": "Free delivery on orders over $25. Shipping cost: $3.99 for smaller orders.",
+    "delivery.free-info": "Free delivery on orders over $50.",
 
     // Footer
     "footer.description": "Your destination for the best coffee drinks and artisan sweets with fast delivery.",

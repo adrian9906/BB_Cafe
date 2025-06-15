@@ -3,7 +3,7 @@
 import { createContext, useContext, useReducer, type ReactNode } from "react"
 
 interface CartItem {
-  id: number
+  id: string
   name: string
   price: number
   quantity: number
@@ -53,7 +53,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     }
 
     case "REMOVE_ITEM": {
-      const newItems = state.items.filter((item) => item.id !== action.payload)
+      const newItems = state.items.filter((item) => item.id !== String(action.payload))
       return {
         items: newItems,
         total: newItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
@@ -63,7 +63,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case "UPDATE_QUANTITY": {
       const updatedItems = state.items
         .map((item) =>
-          item.id === action.payload.id ? { ...item, quantity: Math.max(0, action.payload.quantity) } : item,
+          item.id === String(action.payload) ? { ...item, quantity: Math.max(0, action.payload.quantity) } : item,
         )
         .filter((item) => item.quantity > 0)
 
