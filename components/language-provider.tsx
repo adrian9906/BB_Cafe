@@ -29,7 +29,7 @@ const translations = {
     "hero.description":
       "Descubre nuestras deliciosas bebidas de café preparadas al momento y dulces gourmets. Delivery rápido y seguro en toda la ciudad.",
     "hero.view-products": "Ver Productos",
-    "hero.free-delivery": "Delivery Gratis",
+    "hero.free-delivery": "Iniciar Sesión",
 
     // Features
     "features.artisan-drinks": "Bebidas",
@@ -125,7 +125,7 @@ const translations = {
     "hero.description":
       "Discover our coffee drinks prepared fresh and gourmet desserts. Fast and secure delivery throughout the city.",
     "hero.view-products": "View Products",
-    "hero.free-delivery": "Free Delivery",
+    "hero.free-delivery": "Log In",
 
     // Features
     "features.artisan-drinks": "Drinks",

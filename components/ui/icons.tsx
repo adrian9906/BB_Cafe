@@ -54,7 +54,10 @@ import {
     Download,
     Rss,
     Bell,
-    BookText
+    BookText,
+    LogIn,
+    EyeOff,
+    Gift
   } from 'lucide-react'
   
   export type Icon = LucideIcon
@@ -65,6 +68,8 @@ import {
     pencil: Pencil,
     back: ChevronLeft,
     views: Eye,
+    gift: Gift,
+    eyeOff: EyeOff,
     registers: History,
     pending: FolderClock,
     close: X,
@@ -78,6 +83,7 @@ import {
     search: Search,
     chevronRight: ChevronRight,
     trash: Trash,
+    singIN: LogIn,
     ['data-extractor']: TextSearchIcon,
     post: FileText,
     page: File,

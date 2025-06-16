@@ -10,15 +10,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Minus, Plus, ShoppingCart } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 import Image from "next/image"
 import { useLanguage } from "@/components/language-provider"
 import { useCart } from "../cart/cart-provider"
 import { ProductProps } from "@/app/products/page"
+import { Counter } from "../animate-ui/components/counter"
 
 
 interface AddToCartModalProps {
@@ -40,10 +40,7 @@ export function AddToCartModal({ product, isOpen, onClose }: AddToCartModalProps
   const hasFlavorOptions = product.category === "sweets"
   const availableFlavors = product.flavors.split(',').filter(item=>item !== 'none')
 
-  const handleQuantityChange = (newQuantity: number) => {
-    setQuantity(Math.max(1, newQuantity))
-  }
-
+  
   const handleAddToCart = () => {
     // Crear el nombre del producto con las opciones seleccionadas
     let productName = product.name
@@ -106,25 +103,7 @@ export function AddToCartModal({ product, isOpen, onClose }: AddToCartModalProps
           <div className="space-y-2">
             <Label htmlFor="quantity">Cantidad</Label>
             <div className="flex items-center gap-3">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => handleQuantityChange(quantity - 1)}
-                disabled={quantity <= 1}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <Input
-                id="quantity"
-                type="number"
-                value={quantity}
-                onChange={(e) => handleQuantityChange(Number.parseInt(e.target.value) || 1)}
-                className="w-20 text-center"
-                min="1"
-              />
-              <Button variant="outline" size="icon" onClick={() => handleQuantityChange(quantity + 1)}>
-                <Plus className="h-4 w-4" />
-              </Button>
+              <Counter number={quantity} setNumber={setQuantity} />
             </div>
           </div>
 

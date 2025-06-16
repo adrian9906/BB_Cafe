@@ -10,6 +10,7 @@ import { useState, useEffect } from "react"
 import { StarRating } from "./startRating"
 import { ProductProps } from "@/app/products/page"
 import { AddToCartModal } from "./addTocart"
+import { editRating } from "@/lib/actions"
 
 interface ProductCardProps {
   product: ProductProps
@@ -32,8 +33,16 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const handleAddToCart = () => {
     setIsModalOpen(true)
   }
-  const handleRatingChange = (rating: number) => {
-    setUserRating(rating)
+  const handleRatingChange = async (product:string,rating: number) => {
+    try{
+        await editRating(product, rating)
+        setUserRating(rating)
+
+    }
+    catch (error) {
+      console.log(error)
+
+    }
   }
 
   return (
@@ -69,7 +78,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             <StarRating
               productId={product.id}
               initialRating={userRating}
-              onRatingChange={handleRatingChange}
+              onRatingChange={(value)=>handleRatingChange(product.name,value)}
               size="sm"
               showText={true}
             />

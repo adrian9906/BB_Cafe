@@ -25,6 +25,8 @@ model User {
   updatedAt DateTime    @updatedAt @map(name: "updated_at")
   accounts  Account[]
   sessions  Session[]
+
+  Cart Cart[]
 }
 
 model Account {
@@ -67,12 +69,28 @@ model Product {
   category  String
   featured  Boolean  @default(false)
   flavors   String   @default("none")
+
+  Cart Cart[]
 }
 
 model Workers {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String
   position  String
   description String
   image     String
+}
+
+model Cart {
+  id        String @id @default(uuid())
+  userId    String? 
+  items     String
+  SessionID String?
+  productID String?
+  total     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  product   Product?     @relation(fields: [productID], references: [id], onDelete: SetNull)
 }

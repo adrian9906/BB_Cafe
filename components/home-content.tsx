@@ -8,9 +8,27 @@ import { Coffee, Truck, Star, ArrowRight } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import Footer from "./footer"
 import { ProductProps } from "@/app/products/page"
+import { RollingText } from '@/components/animate-ui/text/rolling';
+import { SplittingText } from "./animate-ui/text/splitting"
+import { WritingText } from "./animate-ui/text/writing"
+import { useEffect, useState } from "react"
 
 export function HomeContent({featuredProducts}:{featuredProducts:ProductProps[]}) {
   const { t } = useLanguage()
+   const [writingFinished, setWritingFinished] = useState(false);
+   const charCount = t("hero.title").length;
+   const text= t("hero.title")
+   const charDelay = 105; // milisegundos por carácter (ajusta según tu velocidad)
+   const animationDuration = charCount * charDelay;
+   console.log(writingFinished)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setWritingFinished(true);
+    }, animationDuration + 500); // +500ms de margen
+    
+    return () => clearTimeout(timer);
+  }, [text, animationDuration]);
+
 
   return (
     <>
@@ -19,12 +37,22 @@ export function HomeContent({featuredProducts}:{featuredProducts:ProductProps[]}
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-5xl font-bold mb-6">
-                {t("hero.title")}
-                <span className="text-amber-400"> {t("hero.subtitle")}</span>
-              </h1>
-              <p className="text-xl mb-8 text-gray-200">{t("hero.description")}</p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="font-bold mb-6">
+                <WritingText
+                  className="text-5xl"
+                  text={t("hero.title")}
+                  spacing={9}
+                  onChange={() => setWritingFinished(true)}
+                />
+                {writingFinished && <RollingText className="text-5xl text-amber-400" text={t("hero.subtitle")}/>}
+              </div>
+               <SplittingText
+                  className="text-xl mb-8 text-gray-200"
+                  text={t("hero.description")}
+                  delay={6800}
+                  type="words"
+                />
+              <div className="flex flex-col sm:flex-row gap-4 mt-4">
                 <Button asChild size="lg" className="bg-amber-600 hover:bg-amber-700">
                   <Link href="/products">
                     {t("hero.view-products")} <ArrowRight className="ml-2 h-5 w-5" />
@@ -36,7 +64,7 @@ export function HomeContent({featuredProducts}:{featuredProducts:ProductProps[]}
                   size="lg"
                   className="border-inherit  hover:bg-white hover:text-black"
                 >
-                  <Link href="#delivery">{t("hero.free-delivery")}</Link>
+                  <Link href="/login">{t("hero.free-delivery")}</Link>
                 </Button>
                 
               </div>
