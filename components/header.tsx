@@ -21,7 +21,7 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
   if (isAdmin) {
     return (
-      <header className="bg-gray-900 text-white shadow-lg border-b border-gray-700 sticky top-0 z-50">
+      <header className="bg-background shadow-sm border-b sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo Admin */}
@@ -74,20 +74,9 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
             {/* Admin Controls */}
             <div className="flex items-center gap-3">
               <ThemeToggle />
-
+              <LanguageToggle />
               <UserAccountNav user={user}/>
-              <Button asChild variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:text-white">
-                <Link href="/?view=customer">Vista Cliente</Link>
-              </Button>
-
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-gray-600 text-gray-300 hover:text-white"
-              >
-                Salir
-              </Button>
-
+            
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"

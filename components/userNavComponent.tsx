@@ -22,7 +22,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
       <DropdownMenuTrigger>
         <Avatar>
             <AvatarImage src={user?.image||''} alt={user?.name?.slice(0,1)||''} />
-            <AvatarFallback>{user?.name}</AvatarFallback>
+            <AvatarFallback>{user?.name?.slice(0,1)}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>

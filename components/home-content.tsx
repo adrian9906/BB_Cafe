@@ -13,12 +13,13 @@ import { SplittingText } from "./animate-ui/text/splitting"
 import { WritingText } from "./animate-ui/text/writing"
 import { useEffect, useState } from "react"
 
-export function HomeContent({featuredProducts}:{featuredProducts:ProductProps[]}) {
+export function HomeContent({featuredProducts,isLogged}:{isLogged:boolean,featuredProducts:ProductProps[]}) {
+  console.log(isLogged)
   const { t } = useLanguage()
    const [writingFinished, setWritingFinished] = useState(false);
    const charCount = t("hero.title").length;
    const text= t("hero.title")
-   const charDelay = 105; // milisegundos por carácter (ajusta según tu velocidad)
+   const charDelay = 95; // milisegundos por carácter (ajusta según tu velocidad)
    const animationDuration = charCount * charDelay;
    console.log(writingFinished)
   useEffect(() => {
@@ -58,14 +59,16 @@ export function HomeContent({featuredProducts}:{featuredProducts:ProductProps[]}
                     {t("hero.view-products")} <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button
-                  asChild
-                  variant="default"
-                  size="lg"
-                  className="border-inherit  hover:bg-white hover:text-black"
-                >
-                  <Link href="/login">{t("hero.free-delivery")}</Link>
-                </Button>
+                {!isLogged && (
+                  <Button
+                    asChild
+                    variant="default"
+                    size="lg"
+                    className="border-inherit  hover:bg-white hover:text-black"
+                  >
+                    <Link href="/login">{t("hero.free-delivery")}</Link>
+                  </Button>
+                  )}
                 
               </div>
             </div>

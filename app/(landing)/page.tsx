@@ -21,14 +21,13 @@ export default async function HomePage() {
 
     }
   )
-  const user = await getCurrentUser()
+  const user: UserProps | null = await getCurrentUser();
   const isAdmin = user?.rol === "ADMIN"
   const isLogged = user !== null
-  
   return (
     <div className="min-h-screen bg-background">
-      <Header isAdmin = {isAdmin} isLogged = {isLogged} user = {user} />
-      <HomeContent featuredProducts={featuredProducts} />
+      <Header isAdmin = {isAdmin} isLogged = {isLogged} user = {user || null}/>
+      <HomeContent isLogged={isLogged} featuredProducts={featuredProducts} />
     </div>
   )
 }

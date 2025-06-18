@@ -67,9 +67,9 @@ model Product {
   image     String
   rating    Float
   category  String
+  stock     Int      @default(0)
   featured  Boolean  @default(false)
   flavors   String   @default("none")
-
   Cart Cart[]
 }
 
@@ -79,6 +79,9 @@ model Workers {
   position  String
   description String
   image     String
+  email     String
+  phone     String
+  
 }
 
 model Cart {
@@ -94,3 +97,4 @@ model Cart {
   user      User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
   product   Product?     @relation(fields: [productID], references: [id], onDelete: SetNull)
 }
+

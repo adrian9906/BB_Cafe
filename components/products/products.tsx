@@ -12,8 +12,9 @@ import { ProductCard } from "./productsCard"
 import Footer from "../footer"
 import { ProductProps } from "@/app/products/page"
 import { createUrl } from "@/lib/utils"
+import { UserProps } from "@/app/(landing)/page"
 
-export default function ProductsPage({products}:{products:ProductProps[]}) {
+export default function ProductsPage({products, isAdmin, isLogged, user}:{products:ProductProps[],isAdmin:boolean, isLogged:boolean, user: UserProps | null}) {
   const searchParams = useSearchParams()
   const categoryFilter = searchParams.get("category")
   const { t } = useLanguage()
@@ -63,7 +64,7 @@ export default function ProductsPage({products}:{products:ProductProps[]}) {
       }
   return (
       <div className="max-h-screen bg-background">
-      <Header />
+      <Header isAdmin= {isAdmin} isLogged={isLogged} user={user || null}/>
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}

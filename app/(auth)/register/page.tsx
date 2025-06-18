@@ -5,16 +5,21 @@ import Header from '@/components/header'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Icons } from '@/components/ui/icons'
 import { UserRegisterForm } from '@/components/auth/registerForm'
+import { getCurrentUser } from '@/lib/session'
+import { UserProps } from '@/app/(landing)/page'
 
 export const metadata: Metadata = {
   title: 'Iniciar Sesión',
   description: 'Inicie sesión en su cuenta'
 }
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
+    const user: UserProps | null = await getCurrentUser ();
+     const isAdmin = user?.rol === "ADMIN"
+     const isLogged = user !== null  
     return (
         <main className='min-h-screen bg-background'>
-        <Header />
+        <Header isAdmin = {isAdmin} isLogged = {isLogged} user = {user || null}/>
         <div className="container mx-auto px-4 py-30">
             <div className="max-w-xl mx-auto">
             <Card>
