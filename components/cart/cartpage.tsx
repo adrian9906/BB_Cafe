@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react"
-import Header from "@/components/header"
 import { useLanguage } from "@/components/language-provider"
 import { useCart } from "./cart-provider"
-export default function CartComponent() {
+export default function CartComponent({isLoggedIn}:{isLoggedIn:boolean}) {
   const { items, total, updateQuantity, removeItem } = useCart()
   const { t } = useLanguage()
-  const discount = 0.1
+  const discount = (isLoggedIn ? 0.1 : 0)
 
   const subtotal = total
   const discountAmount = subtotal * discount
@@ -21,8 +20,6 @@ export default function CartComponent() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
         <div className="container mx-auto px-4 py-16">
           <div className="text-center">
             <ShoppingBag className="h-24 w-24 text-muted-foreground mx-auto mb-6" />
@@ -33,14 +30,11 @@ export default function CartComponent() {
             </Button>
           </div>
         </div>
-      </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-muted/50">
-      <Header />
-
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8">{t("cart.title")}</h1>
 

@@ -174,3 +174,30 @@ export async function DeleteWorker(id:string) {
     }
   })
 }
+
+export async function UpdateWorker(id:string, data:FormDataWorker) {
+
+  const {
+    name,
+    description,      
+    phone,
+    image,     
+    email,     
+    position
+  } = data
+  const product = await db.workers.update({
+    where:{
+      id
+    },
+    data:{
+      name,
+      description,
+      image,
+      email,
+      phone,
+      position,
+    }
+  })
+  return product
+  
+}

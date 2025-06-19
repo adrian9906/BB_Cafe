@@ -85,9 +85,9 @@ export function EditProductForm({ className,product, ...props }: CreateProductsF
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
-                <DialogTitle>Nuevo Producto</DialogTitle>
+                <DialogTitle>Editar {product.name}</DialogTitle>
                 <DialogDescription>
-                  Agrega un nuevo producto al catálogo
+                  Editar el producto {product.name} en el catálogo
                 </DialogDescription>
               </DialogHeader>
                 <Form {...form}>

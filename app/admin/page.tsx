@@ -8,6 +8,7 @@ import { db } from "@/lib/db";
 
 
 
+
 export default async function AdminDashboard() {
  const user: UserProps | null = await getCurrentUser();
  const isAdmin = user?.rol === "ADMIN"
@@ -22,6 +23,7 @@ const products: ProductProps[] = await db.product.findMany()
     <div className="min-h-screen bg-background">
         <Header isAdmin = {isAdmin} isLogged = {isLogged} user = {user || null}/>
         <AdminHome  products={products} />
+        
     </div>
     )
 }

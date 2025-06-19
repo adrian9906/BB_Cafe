@@ -2,33 +2,21 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Plus, Edit, Trash2, Users, ArrowLeft } from "lucide-react"
+import {Trash2, Users, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { AddEmployesForm } from "./addEmployees"
 import { EmployeeProps } from "@/app/admin/employees/page"
 import { toast } from "sonner"
 import { DeleteWorker } from "@/lib/actions"
+import { EditEmployesForm } from "./editemployees"
 
-interface Employee {
-  id: number
+export interface Employee {
+  id: string
   name: string
   position: string
   description: string
@@ -39,10 +27,7 @@ interface Employee {
 
 export default function AdminEmployeesHome({isAdmin, employees}:{isAdmin: boolean,employees:EmployeeProps[]}) {
   const router = useRouter()
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [editingEmployee, setEditingEmployee] = useState<Employee | null>(null)
-  const [message, setMessage] = useState("")
-
+  
   
   useEffect(() => {
     if (!isAdmin) {
@@ -82,16 +67,16 @@ export default function AdminEmployeesHome({isAdmin, employees}:{isAdmin: boolea
               <p className="text-muted-foreground">Administra la información del equipo de BB Café</p>
             </div>
           </div>
-          <AddEmployesForm/>
+          <AddEmployesForm message="Nuevo Empleado"/>
         </div>
 
-        {/* Success Message */}
+        {/* Success Message
         {message && (
           <Alert className="mb-6">
             <Users className="h-4 w-4" />
             <AlertDescription>{message}</AlertDescription>
           </Alert>
-        )}
+        )} */}
 
         {/* Employees Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -125,10 +110,7 @@ export default function AdminEmployeesHome({isAdmin, employees}:{isAdmin: boolea
                   </div>
 
                   <div className="flex gap-2 pt-2">
-                    <Button size="sm" variant="outline" className="flex-1">
-                      <Edit className="h-4 w-4 mr-2" />
-                      Editar
-                    </Button>
+                    <EditEmployesForm worker={employee} />
                     <Button
                       size="sm"
                       variant="outline"
@@ -149,10 +131,7 @@ export default function AdminEmployeesHome({isAdmin, employees}:{isAdmin: boolea
             <Users className="h-24 w-24 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">No hay empleados registrados</h3>
             <p className="text-muted-foreground mb-4">Comienza agregando el primer miembro del equipo.</p>
-            <Button onClick={() => setIsDialogOpen(true)} className="bg-blue-600 hover:bg-blue-700">
-              <Plus className="h-4 w-4 mr-2" />
-              Agregar Primer Empleado
-            </Button>
+              <AddEmployesForm message={"Agregar Primer Empleado"}/>
           </div>
         )}
       </div>

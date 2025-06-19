@@ -44,27 +44,27 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
 
             {/* Admin Navigation */}
             <nav className="hidden md:flex items-center gap-6">
-              <Link href="/admin" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors">
+              <Link href="/admin" className="flex items-center gap-2 text-foreground hover:text-amber-600 transition-colors">
                 <BarChart3 className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
                 href="/admin/products"
-                className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-foreground hover:text-amber-600 transition-colors"
               >
                 <Package className="h-4 w-4" />
                 Productos
               </Link>
               <Link
                 href="/admin/employees"
-                className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-foreground hover:text-amber-600 transition-colors"
               >
                 <Users className="h-4 w-4" />
                 Empleados
               </Link>
               <Link
                 href="/admin/reports"
-                className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-foreground hover:text-amber-600 transition-colors"
               >
                 <BarChart3 className="h-4 w-4" />
                 Reportes

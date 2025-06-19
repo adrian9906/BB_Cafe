@@ -3,46 +3,17 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Coffee, Heart, Users, Award, Clock, Leaf } from "lucide-react"
 import Header from "@/components/header"
+import { UserProps } from "../(landing)/page"
+import { getCurrentUser } from "@/lib/session"
+import { db } from "@/lib/db"
 
-export default function AboutPage() {
-  const teamMembers = [
-    {
-      name: "María González",
-      position: "Fundadora & CEO",
-      description: "Apasionada del café con 15 años de experiencia en la industria gastronómica.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Carlos Rodríguez",
-      position: "Maestro Barista",
-      description: "Especialista en café de especialidad y técnicas de preparación artesanal.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Ana Martínez",
-      position: "Chef Pastelera",
-      description: "Creadora de nuestros deliciosos dulces y postres artesanales.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Luis Fernández",
-      position: "Gerente de Operaciones",
-      description: "Encargado de garantizar la calidad y eficiencia en nuestros servicios.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Sofia Herrera",
-      position: "Especialista en Atención al Cliente",
-      description: "Dedicada a brindar la mejor experiencia a nuestros clientes.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-    {
-      name: "Diego Morales",
-      position: "Coordinador de Delivery",
-      description: "Responsable de que tus pedidos lleguen frescos y a tiempo.",
-      image: "/placeholder.svg?height=300&width=300",
-    },
-  ]
+export default async function AboutPage() {
+
+  const user: UserProps | null = await getCurrentUser();
+  const isAdmin = user?.rol === "ADMIN"
+  const isLogged = user !== null
+
+  const teamMembers = await db.workers.findMany()
 
   const values = [
     {
@@ -79,7 +50,7 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header isAdmin = {isAdmin} isLogged = {isLogged} user = {user || null}/>
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 py-20">
@@ -91,12 +62,17 @@ export default function AboutPage() {
                 Nuestra Historia en <span className="text-amber-600">BB Café</span>
               </h1>
               <p className="text-lg text-muted-foreground mb-6">
-                Desde marzo de 2025, surge la idea BB Café con la idea de crear los mejores cáfes y dulces gourmet
-                de la región.
+                En el vibrante mes de marzo de 2025, nació BB Café con un sueño sencillo
+                pero ambicioso: reinventar la experiencia del café en nuestra región.
+                Nos inspira la búsqueda incansable de la excelencia fusionando tradición e innovación
+                para crear cafés excepcionales y dulces gourmet que despiertan los sentidos.
               </p>
               <p className="text-muted-foreground">
-                Nuestro compromiso es simple: ofrecer las mejores bebidas de café preparadas al momento y dulces
-                gourmet de la más alta calidad, todo con el servicio excepcional que nos caracteriza.
+                En BB Café, no solo servimos bebidas; creamos conexiones, aromas y memorias. Esta es nuestra historia, y cada día
+                escribimos un nuevo capítulo contigo.
+              </p>
+              <p className="text-amber-600 font-bold mt-1">
+                Bienvenidos a nuestra mesa.
               </p>
             </div>
             <div className="relative flex mx-auto items-center justify-between">

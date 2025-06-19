@@ -4,7 +4,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Star } from "lucide-react"
+import { Coffee, Cookie, Star } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { useState, useEffect } from "react"
 import { StarRating } from "./startRating"
@@ -21,6 +21,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { t } = useLanguage()
   const [userRating, setUserRating] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const hasCustomization = product.category === "drinks" || product.category === "sweets"
 
   useEffect(() => {
     // Cargar calificación del usuario desde localStorage
@@ -55,24 +56,57 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     >
       <CardContent className="p-4">
         <div className="relative mb-4 overflow-hidden rounded-lg">
-          <Image
-            src={product.image || "/placeholder.svg"}
-            alt={product.name}
-            width={300}
-            height={300}
-            className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-          />
-          {product.featured && <Badge className="absolute top-2 left-2 bg-amber-600">{t("products.featured")}</Badge>}
-          <div className="absolute top-2 right-2 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 text-sm font-medium flex items-center gap-1">
-            <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-            {product.rating}
+            <Image
+              src={product.image || "/placeholder.svg"}
+              alt={product.name}
+              width={300}
+              height={300}
+              className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            {product.featured && <Badge className="absolute top-2 left-2 bg-amber-600">{t("products.featured")}</Badge>}
+
+            {/* Indicador de personalización */}
+            {hasCustomization && (
+              <Badge className="absolute top-2 right-2 bg-blue-600 text-white text-xs flex items-center gap-1">
+                {product.category === "coffee" ? (
+                  <>
+                    <Coffee className="h-3 w-3" />
+                    Sabores
+                  </>
+                ) : (
+                  <>
+                    <Cookie className="h-3 w-3" />
+                    Sabores
+                  </>
+                )}
+              </Badge>
+            )}
+
+            <div className="absolute bottom-2 right-2 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 text-sm font-medium flex items-center gap-1">
+              <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+              {product.rating}
+            </div>
           </div>
-        </div>
 
         <div className="space-y-3">
           <h3 className="font-semibold text-lg leading-tight">{product.name}</h3>
           <p className="text-muted-foreground text-sm line-clamp-2">{product.description}</p>
-
+          {/* Indicador de opciones disponibles */}
+            {hasCustomization && (
+              <div className="flex items-center gap-2 text-xs text-blue-600 dark:text-blue-400">
+                {product.category === "coffee" ? (
+                  <>
+                    <Coffee className="h-3 w-3" />
+                    <span>Disponible en múltiples sabores de bebida</span>
+                  </>
+                ) : (
+                  <>
+                    <Cookie className="h-3 w-3" />
+                    <span>Disponible en múltiples sabores</span>
+                  </>
+                )}
+              </div>
+            )}
           {/* Star Rating Component */}
           <div className="py-2">
             <StarRating

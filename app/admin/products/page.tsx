@@ -15,6 +15,7 @@ export default async function ProductAdminPage() {
         <div>
             <Header isAdmin = {isAdmin} isLogged = {isLogged} user = {user || null}/>
             <AdminProductsPage isAdmin = {isAdmin} products={products}/>
+            
         </div>
     )
     

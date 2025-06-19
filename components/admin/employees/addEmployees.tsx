@@ -17,13 +17,14 @@ import * as z from 'zod'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface CreateProductsFormProps extends React.HTMLAttributes<HTMLDivElement> {
+  message:string
 }
 
 type FormData = z.infer<typeof WorkersSchema>
 
 
 
-export function AddEmployesForm({ className, ...props }: CreateProductsFormProps) {
+export function AddEmployesForm({ className,message, ...props }: CreateProductsFormProps) {
     const form = useForm<FormData>({
     resolver: zodResolver(WorkersSchema),
   })
@@ -67,7 +68,7 @@ export function AddEmployesForm({ className, ...props }: CreateProductsFormProps
                 <DialogTrigger asChild>
                     <Button className="bg-blue-600 hover:bg-blue-700">
                      <Plus className="h-4 w-4 mr-2" />
-                            Nuevo Empleado
+                            {message}
                      </Button>
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-md">
