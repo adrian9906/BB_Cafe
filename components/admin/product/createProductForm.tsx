@@ -38,7 +38,7 @@ export function CreateProductForm({ className, productSize, ...props }: CreatePr
     const [isDialogOpen, setIsDialogOpen] = useState(false)
 
 
-     const handleSubmit = async (data: FormData) => {
+    const handleSubmit = async (data: FormData) => {
     try {
       setIsLoading(true)
 

@@ -20,6 +20,23 @@ interface FormDataWorker {
   phone: string;
   email: string
 }
+
+interface FormDataOrders {
+   name: string;
+    phone: string;
+    email: string;
+    delivery: Date;
+    type: string;
+    adress: string;
+    quantity: number;
+    flavors?: string | undefined;
+    decorations?: boolean | undefined;
+    theme?: string | undefined;
+    request?: string | undefined;
+    themeType:string
+}
+
+
 export async function DeleteProduct(id:string) {
   const productRecord = await db.product.findFirst({
     where:{
@@ -200,4 +217,57 @@ export async function UpdateWorker(id:string, data:FormDataWorker) {
   })
   return product
   
+}
+
+export async function CreateOrders(data:FormDataOrders) {
+  const {
+    adress, 
+    delivery, 
+    email,
+    name, 
+    phone, 
+    quantity, 
+    type, 
+    decorations, 
+    flavors, 
+    request, 
+    theme,
+    themeType} = data
+    console.log(themeType)
+    let price = quantity * 50
+    if (decorations){
+      price = price + 100 + 100
+    }
+
+     const orders = await db.customOrder.create({
+    data:{
+      name,
+      adress,
+      decorations: decorations || false,
+      delivery,
+      email,
+      phone,
+      quantity,
+      type,
+      flavors,
+      price,
+      request,
+      theme,
+      themeType: themeType
+    }
+  })
+  return orders
+
+  
+}
+
+export async function UpdateOrders(id:string, newStatus: string) {
+  await db.customOrder.update({
+        where:{
+          id: id
+        },
+        data:{
+          state: newStatus
+        }
+      })
 }

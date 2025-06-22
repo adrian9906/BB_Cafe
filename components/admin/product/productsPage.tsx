@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Trash2, ArrowLeft } from "lucide-react"
+import { Trash2, ArrowLeft, Palette, Coffee, Cookie } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { ProductProps } from "@/app/products/page"
@@ -64,21 +64,52 @@ export default function AdminProductsPage({isAdmin, products}: {isAdmin: boolean
 
         {/* Products Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
-            <Card key={product.id} className="overflow-hidden">
-              <div className="relative h-48">
-                <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+          {products.map((product,index) => (
+            <Card
+              key={product.id}
+              className="relative pb-14 group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+              style={{
+                animationDelay: `${index * 100}ms`,
+              }}
+            >
+
+              <CardContent className="p-4">
+                <div className="relative mb-4 overflow-hidden rounded-lg">
+                <Image
+                src={product.image || "/placeholder.svg"}
+                alt={product.name}
+                width={300}
+                height={300}
+                sizes="100vw"
+                className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+              />
                 {product.featured && <Badge className="absolute top-2 left-2 bg-amber-600">Destacado</Badge>}
-                <div className="absolute top-2 right-2 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 text-sm">
+                {product.flavors && (
+                  <Badge className="absolute top-2 right-2 bg-purple-600 text-white text-xs flex items-center gap-1">
+                    <Palette className="h-3 w-3" />
+                    Sabores
+                  </Badge>
+                )}
+                <div className="absolute bottom-2 right-2 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 text-sm">
                   Stock: {product.stock}
                 </div>
               </div>
-
-              <CardContent className="p-4">
                 <div className="space-y-2">
                   <div className="flex items-start justify-between">
                     <h3 className="font-semibold text-lg">{product.name}</h3>
-                    <Badge variant="outline">{product.category === "coffee" ? "Bebida" : "Dulce"}</Badge>
+                    <Badge variant="outline" className="flex items-center gap-1">
+                      {product.category === "coffee" ? (
+                        <>
+                          <Coffee className="h-3 w-3" />
+                          Bebida
+                        </>
+                      ) : (
+                        <>
+                          <Cookie className="h-3 w-3" />
+                          Dulce
+                        </>
+                      )}
+                    </Badge>
                   </div>
 
                   <p className="text-muted-foreground text-sm line-clamp-2">{product.description}</p>

@@ -61,14 +61,15 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               alt={product.name}
               width={300}
               height={300}
-              className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+              sizes="100vw"
+              className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
             />
             {product.featured && <Badge className="absolute top-2 left-2 bg-amber-600">{t("products.featured")}</Badge>}
 
             {/* Indicador de personalización */}
-            {hasCustomization && (
+            {hasCustomization && product.flavors!== 'none' && (
               <Badge className="absolute top-2 right-2 bg-blue-600 text-white text-xs flex items-center gap-1">
-                {product.category === "coffee" ? (
+                {product.category === "drinks" ? (
                   <>
                     <Coffee className="h-3 w-3" />
                     Sabores
@@ -92,7 +93,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <h3 className="font-semibold text-lg leading-tight">{product.name}</h3>
           <p className="text-muted-foreground text-sm line-clamp-2">{product.description}</p>
           {/* Indicador de opciones disponibles */}
-            {hasCustomization && (
+            {hasCustomization && product.flavors!== 'none' &&(
               <div className="flex items-center gap-2 text-xs text-blue-600 dark:text-blue-400">
                 {product.category === "coffee" ? (
                   <>

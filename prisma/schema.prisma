@@ -98,3 +98,23 @@ model Cart {
   product   Product?     @relation(fields: [productID], references: [id], onDelete: SetNull)
 }
 
+model CustomOrder {
+  id            String @id @default(uuid())
+  name          String
+  phone         String
+  email         String
+  flavors       String?
+  decorations   Boolean
+  delivery      DateTime
+  adress        String
+  price         Float? @default(0)
+  theme         String?
+  type          String
+  themeType     String? @default("custom")
+  image         String?
+  quantity      Int
+  state         String?  @default("pending")
+  request       String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

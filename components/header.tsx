@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Menu, X, BarChart3, Package, Users } from "lucide-react"
+import { ShoppingCart, Menu, X, BarChart3, Package, Users, ClipboardList } from "lucide-react"
 import { useState } from "react"
 import { useLanguage } from "@/components/language-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -61,6 +61,13 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
               >
                 <Users className="h-4 w-4" />
                 Empleados
+              </Link>
+              <Link
+                href="/admin/orders"
+                className="flex items-center gap-2 text-foreground hover:text-amber-600 transition-colors"
+              >
+                <ClipboardList className="h-4 w-4" />
+                Encargos
               </Link>
               <Link
                 href="/admin/reports"
@@ -161,7 +168,7 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
             <Link href="/products" className="text-foreground hover:text-amber-600 transition-colors">
               {t("nav.products")}
             </Link>
-            <Link href="/custom-orders" className="text-foreground hover:text-amber-600 transition-colors">
+            <Link href="/order" className="text-foreground hover:text-amber-600 transition-colors">
               {t("nav.custom-orders")}
             </Link>
             <Link href="/about" className="text-foreground hover:text-amber-600 transition-colors">
