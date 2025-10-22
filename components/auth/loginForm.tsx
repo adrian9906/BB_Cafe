@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation'
 import { userAuthSchema } from '@/lib/validations/auth'
 
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
 
 type FormData = z.infer<typeof userAuthSchema>
 
@@ -45,14 +45,14 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     if (!signInResult?.ok) {
       console.log(signInResult?.error)
-      return toast('Algo ha salido mal.',{
+      return toast('Algo ha salido mal.', {
         description: 'Tu solicitud de acceso ha fallado. Intentalo más tarde.',
         className: 'toast-error',
-        action:{
-            label: 'Intentalo de nuevo',
-            onClick:()=>{
-              router.replace('/')
-            }
+        action: {
+          label: 'Intentalo de nuevo',
+          onClick: () => {
+            router.replace('/')
+          }
         }
       })
     }
@@ -60,7 +60,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   }
 
   return (
-      <div className={cn('grid gap-6', className)} {...props}>
+    <div className={cn('grid gap-6', className)} {...props}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='grid gap-2'>
           <div className='grid gap-1'>
@@ -88,7 +88,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               Password
             </Label>
             <div className='relative'>
-                <Input
+              <Input
                 id='password'
                 type={showPassword ? "text" : "password"}
                 placeholder='Contraseña'
@@ -98,16 +98,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 disabled={isLoading}
                 {...register('password')}
 
-                />
-                <Button
+              />
+              <Button
                 type="button"
                 variant="ghost"
                 size="icon"
                 className="absolute right-0 top-0 h-full px-3"
                 onClick={() => setShowPassword(!showPassword)}
-                >
+              >
                 {showPassword ? <Icons.eyeOff className="h-4 w-4" /> : <Icons.views className="h-4 w-4" />}
-                </Button>
+              </Button>
 
             </div>
             {errors?.password && (

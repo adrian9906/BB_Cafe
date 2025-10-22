@@ -41,7 +41,7 @@ export function CreateProductForm({ className, productSize, dialog, setDialog, .
 
   useEffect(() => {
     setDialog(dialog)
-  }, [dialog])
+  }, [dialog, setDialog])
 
   const handleSubmit = async (data: FormData) => {
     try {

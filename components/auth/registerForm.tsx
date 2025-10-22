@@ -15,7 +15,7 @@ import { toast } from "sonner"
 import { Icons } from '@/components/ui/icons'
 import { useRouter } from 'next/navigation'
 
-interface UserRegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
+type UserRegisterFormProps = React.HTMLAttributes<HTMLDivElement>
 
 type FormData = z.infer<typeof userRegisterSchema>
 
@@ -47,17 +47,17 @@ export function UserRegisterForm({
     setIsLoading(false)
 
     if (!result?.ok) {
-      return toast('Algo ha salido mal.',{
-             description: 'No se ha podido registrar su usuario en el sistema.',
-             className: 'toast-error',
-             action:{
-                 label: 'Intentalo de nuevo',
-                 onClick:()=>{
-                   router.replace('/')
-                 }
-             }
-           })
-         }
+      return toast('Algo ha salido mal.', {
+        description: 'No se ha podido registrar su usuario en el sistema.',
+        className: 'toast-error',
+        action: {
+          label: 'Intentalo de nuevo',
+          onClick: () => {
+            router.replace('/')
+          }
+        }
+      })
+    }
     router.push(searchParams?.get('from') || '/')
   }
 
