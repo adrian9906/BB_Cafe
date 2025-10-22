@@ -296,7 +296,7 @@ export async function UpdateOrders(id: string, newStatus: string) {
   })
 }
 
-export async function uploadImage(formData: FormDataImageUpload) {
+export async function uploadImage(formData: FormDataImageUpload, filePath2: string) {
   try {
     const file = formData.file
 
@@ -335,7 +335,7 @@ export async function uploadImage(formData: FormDataImageUpload) {
     const fileName = `${timestamp}-${randomString}.${extension}`
 
     // Definir ruta donde se guardará (public/uploads)
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads')
+    const uploadDir = path.join(process.cwd(), 'public', filePath2)
 
     // Crear carpeta si no existe
     if (!existsSync(uploadDir)) {
@@ -348,7 +348,7 @@ export async function uploadImage(formData: FormDataImageUpload) {
     await writeFile(filePath, buffer)
 
     // Retornar URL pública
-    const fileUrl = `${process.env.NEXTAUTH_URL}/uploads/${fileName}`
+    const fileUrl = `${process.env.NEXTAUTH_URL}/${filePath2}/${fileName}`
 
     return {
       success: true,

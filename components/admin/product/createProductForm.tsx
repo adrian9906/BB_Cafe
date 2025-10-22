@@ -1,8 +1,9 @@
 'use client'
+import { ImageUpload } from "@/components/image-upload"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Icons } from "@/components/ui/icons"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -10,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { CreatePrduct } from "@/lib/actions"
 import { ProductsSchema } from "@/lib/validations/products"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Package, Plus } from "lucide-react"
+import { Camera, Package, Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -75,9 +76,8 @@ export function CreateProductForm({ className, productSize, dialog, setDialog, .
   return (
     <div className={(className)} {...props}>
       <Dialog open={dialog} onOpenChange={setDialog}>
-        <DialogTrigger asChild>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
+
+        <DialogContent className="sm:max-w-md max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Nuevo Producto</DialogTitle>
             <DialogDescription>
@@ -174,19 +174,35 @@ export function CreateProductForm({ className, productSize, dialog, setDialog, .
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Añade el URL de la imagen (opcional)</FormLabel>
-                    <FormControl>
-                      <Input {...field} placeholder="https://ejemplo.com/imagen.jpg" disabled={isLoading} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <Camera className="h-5 w-5 text-purple-600" />
+                  Imagen de Referencia
+                </h3>
+                <FormField
+                  control={form.control}
+                  name="image"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Sube una imagen de referencia (Opcional)</FormLabel>
+                      <FormControl>
+                        <ImageUpload
+                          label=""
+                          value={field.value || ""}
+                          onChange={field.onChange}
+                          placeholder="Sube una imagen de referencia para el producto"
+                          maxSize={5}
+                          path="products"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        💡 Una imagen nos ayuda a entender mejor tu visión y crear exactamente lo que imaginas
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormField
                 control={form.control}

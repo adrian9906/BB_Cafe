@@ -15,7 +15,8 @@ interface ImageUploadProps {
     onChange: (imageUrl: string) => void
     placeholder?: string
     maxSize?: number // en MB
-    className?: string
+    className?: string,
+    path?: string
 }
 
 export function ImageUpload({
@@ -25,6 +26,7 @@ export function ImageUpload({
     placeholder = "Sube una imagen",
     maxSize = 5,
     className = "",
+    path = "uploads",
 }: ImageUploadProps) {
     const [isDragging, setIsDragging] = useState(false)
     const [error, setError] = useState("")
@@ -33,7 +35,7 @@ export function ImageUpload({
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     const uploadImageToServer = async (file: File): Promise<string> => {
-        const response = await uploadImage({ file })
+        const response = await uploadImage({ file }, path)
 
         if (!response) {
             throw new Error('Error al subir la imagen')
@@ -218,3 +220,4 @@ export function ImageUpload({
         </div>
     )
 }
+
