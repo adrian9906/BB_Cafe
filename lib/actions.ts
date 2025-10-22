@@ -1,6 +1,9 @@
 'use server'
 import { db } from "./db";
-
+import { writeFile, mkdir } from 'fs/promises'
+import path from 'path'
+import { existsSync } from 'fs'
+import { CustomOrder } from "@prisma/client";
 interface FormData {
   name: string;
   description: string;
@@ -8,8 +11,12 @@ interface FormData {
   image: string;
   category: string;
   featured: boolean;
-  flavors? : string,
+  flavors?: string,
   stock: number
+}
+
+interface FormDataImageUpload {
+  file: File;
 }
 
 interface FormDataWorker {
@@ -22,49 +29,51 @@ interface FormDataWorker {
 }
 
 interface FormDataOrders {
-   name: string;
-    phone: string;
-    email: string;
-    delivery: Date;
-    type: string;
-    adress: string;
-    quantity: number;
-    flavors?: string | undefined;
-    decorations?: boolean | undefined;
-    theme?: string | undefined;
-    request?: string | undefined;
-    themeType:string
+  name: string;
+  phone: string;
+  email: string;
+  type: string;
+  adress: string;
+  quantity: number;
+  flavors?: string[] | undefined;
+  decorations?: string[] | undefined;
+  theme?: string | undefined;
+  request?: string | undefined;
+  referenceImage?: string | undefined;
+  deliveryDate?: Date | undefined;
+  specialRequests?: string | undefined;
+  themeType: string
 }
 
 
-export async function DeleteProduct(id:string) {
+export async function DeleteProduct(id: string) {
   const productRecord = await db.product.findFirst({
-    where:{
+    where: {
       id: id
     }
   })
   if (!productRecord) return null
   await db.product.delete({
-    where:{
+    where: {
       id: id
     }
   })
 }
 
 
-export async function CreatePrduct(data:FormData) {
+export async function CreatePrduct(data: FormData) {
   const {
     name,
-    description,      
+    description,
     price,
-    image,     
-    category,     
+    image,
+    category,
     stock,
-    featured, 
+    featured,
     flavors = 'none'
-  } = data 
+  } = data
   const product = await db.product.create({
-    data:{
+    data: {
       name,
       description,
       price,
@@ -76,25 +85,25 @@ export async function CreatePrduct(data:FormData) {
       rating: 0
     }
   })
-  return product 
+  return product
 }
 
-export async function UpdateProduct(id: string, data:FormData) {
+export async function UpdateProduct(id: string, data: FormData) {
   const {
     name,
-    description,      
+    description,
     price,
-    image,     
-    category,     
+    image,
+    category,
     stock,
-    featured, 
+    featured,
     flavors = 'none'
   } = data
   const product = await db.product.update({
-    where:{
+    where: {
       id
     },
-    data:{
+    data: {
       name,
       description,
       price,
@@ -106,27 +115,27 @@ export async function UpdateProduct(id: string, data:FormData) {
     }
   })
   return product
-  
+
 }
 
-export async function EditFeatured(id:string) {
+export async function EditFeatured(id: string) {
   const productRecord = await db.product.findFirst({
-    where:{
+    where: {
       id: id
     }
   })
   if (!productRecord) return null
   await db.product.update({
-    where:{
+    where: {
       id: id
     },
-    data:{
+    data: {
       featured: !productRecord.featured
     }
   })
 }
 
-export async function editRating(product:string, startRating: number) {
+export async function editRating(product: string, startRating: number) {
   const productRecord = await db.product.findFirst({
     where: {
       name: product, // Asume que 'product' es el nombre del producto que buscas
@@ -134,11 +143,11 @@ export async function editRating(product:string, startRating: number) {
   });
   let newRating = 0.0
   if (productRecord) {
-    if (productRecord.rating === 0){
-        newRating = startRating
+    if (productRecord.rating === 0) {
+      newRating = startRating
     }
     else {
-        newRating = (startRating + productRecord.rating)/2
+      newRating = (startRating + productRecord.rating) / 2
     }
     // Si se encontró el evento, actualiza sus descriptors utilizando el ID obtenido
     await db.product.update({
@@ -149,25 +158,25 @@ export async function editRating(product:string, startRating: number) {
         rating: newRating,
       },
     });
-    return 
+    return
   } else {
     console.log('Producto no encontrado');
     return null
   }
-  
+
 }
 
-export async function CreateWorker(data:FormDataWorker) {
+export async function CreateWorker(data: FormDataWorker) {
   const {
     name,
-    description,      
-    image,     
-    position,     
-    phone,     
+    description,
+    image,
+    position,
+    phone,
     email
-  } = data 
+  } = data
   const worker = await db.workers.create({
-    data:{
+    data: {
       name,
       description,
       image,
@@ -178,35 +187,35 @@ export async function CreateWorker(data:FormDataWorker) {
   })
   return worker
 }
-export async function DeleteWorker(id:string) {
+export async function DeleteWorker(id: string) {
   const workerRecord = await db.workers.findFirst({
-    where:{
+    where: {
       id: id
     }
   })
   if (!workerRecord) return null
   await db.workers.delete({
-    where:{
+    where: {
       id: id
     }
   })
 }
 
-export async function UpdateWorker(id:string, data:FormDataWorker) {
+export async function UpdateWorker(id: string, data: FormDataWorker) {
 
   const {
     name,
-    description,      
+    description,
     phone,
-    image,     
-    email,     
+    image,
+    email,
     position
   } = data
   const product = await db.workers.update({
-    where:{
+    where: {
       id
     },
-    data:{
+    data: {
       name,
       description,
       image,
@@ -216,58 +225,154 @@ export async function UpdateWorker(id:string, data:FormDataWorker) {
     }
   })
   return product
-  
+
 }
 
-export async function CreateOrders(data:FormDataOrders) {
-  const {
-    adress, 
-    delivery, 
-    email,
-    name, 
-    phone, 
-    quantity, 
-    type, 
-    decorations, 
-    flavors, 
-    request, 
-    theme,
-    themeType} = data
-    console.log(themeType)
-    let price = quantity * 50
-    if (decorations){
-      price = price + 100 + 100
-    }
 
-     const orders = await db.customOrder.create({
-    data:{
+export async function getOrders() {
+  try {
+    const result: CustomOrder[] = await db.customOrder.findMany()
+    return result
+  }
+  catch {
+    return []
+  }
+}
+export async function CreateOrders(data: FormDataOrders) {
+  const {
+    adress,
+    email,
+    name,
+    phone,
+    quantity,
+    type,
+    decorations,
+    flavors,
+    request,
+    theme,
+    referenceImage,
+    deliveryDate,
+    specialRequests,
+    themeType } = data
+  console.log(themeType)
+  let price = quantity * 50
+  if (decorations) {
+    price = price + 100 + 100
+  }
+  const decorations2 = decorations?.join(", ")
+  const flavors2 = flavors?.join(", ")
+  const orders = await db.customOrder.create({
+    data: {
       name,
-      adress,
-      decorations: decorations || false,
-      delivery,
+      address: adress || "none",
+      decorations: decorations2 || 'none',
       email,
       phone,
       quantity,
       type,
-      flavors,
+      flavors: flavors2 || 'none',
       price,
       request,
+      referenceImage: referenceImage || "none",
+      deliveryDate: deliveryDate || new Date(),
+      specialRequests: specialRequests || "none",
       theme,
       themeType: themeType
     }
   })
   return orders
 
-  
+
 }
 
-export async function UpdateOrders(id:string, newStatus: string) {
+export async function UpdateOrders(id: string, newStatus: string) {
   await db.customOrder.update({
-        where:{
-          id: id
-        },
-        data:{
-          state: newStatus
-        }
-      })
+    where: {
+      id: id
+    },
+    data: {
+      state: newStatus
+    }
+  })
+}
+
+export async function uploadImage(formData: FormDataImageUpload) {
+  try {
+    const file = formData.file
+
+    if (!file) {
+      return {
+        success: false,
+        error: 'No se recibió ningún archivo'
+      }
+    }
+
+    // Validar tipo de archivo
+    if (!file.type.startsWith('image/')) {
+      return {
+        success: false,
+        error: 'El archivo debe ser una imagen'
+      }
+    }
+
+    // Validar tamaño (5MB por defecto)
+    const maxSize = 5 * 1024 * 1024
+    if (file.size > maxSize) {
+      return {
+        success: false,
+        error: 'La imagen es demasiado grande (máx 5MB)'
+      }
+    }
+
+    // Convertir archivo a buffer
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    // Generar nombre único para el archivo
+    const timestamp = Date.now()
+    const randomString = Math.random().toString(36).substring(7)
+    const extension = file.name.split('.').pop()
+    const fileName = `${timestamp}-${randomString}.${extension}`
+
+    // Definir ruta donde se guardará (public/uploads)
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads')
+
+    // Crear carpeta si no existe
+    if (!existsSync(uploadDir)) {
+      await mkdir(uploadDir, { recursive: true })
+    }
+
+    const filePath = path.join(uploadDir, fileName)
+
+    // Guardar archivo
+    await writeFile(filePath, buffer)
+
+    // Retornar URL pública
+    const fileUrl = `${process.env.NEXTAUTH_URL}/uploads/${fileName}`
+
+    return {
+      success: true,
+      url: fileUrl,
+      fileName: fileName
+    }
+
+  } catch (error) {
+    console.error('Error al subir imagen:', error)
+    return {
+      success: false,
+      error: 'Error al procesar la imagen'
+    }
+  }
+}
+
+export async function deleteOrder(where: { id: string }) {
+  try {
+    await db.customOrder.delete({
+      where
+    })
+  } catch (error) {
+    console.error('Error al eliminar la orden:', error)
+    throw error
+  }
+  return { success: true }
 }

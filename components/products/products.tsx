@@ -1,10 +1,9 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search, Filter } from "lucide-react"
+import { Search, Filter, File } from "lucide-react"
 import { useLanguage } from "@/components/language-provider"
 import { useRouter, useSearchParams } from "next/navigation"
 import Header from "../header"
@@ -13,8 +12,9 @@ import Footer from "../footer"
 import { ProductProps } from "@/app/products/page"
 import { createUrl } from "@/lib/utils"
 import { UserProps } from "@/app/(landing)/page"
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription, EmptyContent } from "../ui/empty"
 
-export default function ProductsPage({products, isAdmin, isLogged, user}:{products:ProductProps[],isAdmin:boolean, isLogged:boolean, user: UserProps | null}) {
+export default function ProductsPage({ products, isAdmin, isLogged, user }: { products: ProductProps[], isAdmin: boolean, isLogged: boolean, user: UserProps | null }) {
   const searchParams = useSearchParams()
   const categoryFilter = searchParams.get("category")
   const { t } = useLanguage()
@@ -24,7 +24,7 @@ export default function ProductsPage({products, isAdmin, isLogged, user}:{produc
   const [selectedCategory, setSelectedCategory] = useState(categoryFilter || "all")
   const [sortBy, setSortBy] = useState("name")
 
-  
+
   const filteredProducts = useMemo(() => {
     return products
       .filter((product) => {
@@ -49,22 +49,22 @@ export default function ProductsPage({products, isAdmin, isLogged, user}:{produc
         }
       })
   }, [searchTerm, selectedCategory, sortBy, products])
-   function handleFilter (name:string, value: Date | string | null) {
-      const newParams = new URLSearchParams(searchParams.toString())
-        if (typeof value === 'string') {
-          if(name === 'category'){
-            setSelectedCategory(value)
-          }
-          if (name === 'sort'){
-            setSortBy(value)
-          }
-          newParams.set(name, value) 
-        }
-        router.push(createUrl('/products', newParams))
+  function handleFilter(name: string, value: Date | string | null) {
+    const newParams = new URLSearchParams(searchParams.toString())
+    if (typeof value === 'string') {
+      if (name === 'category') {
+        setSelectedCategory(value)
       }
+      if (name === 'sort') {
+        setSortBy(value)
+      }
+      newParams.set(name, value)
+    }
+    router.push(createUrl('/products', newParams))
+  }
   return (
-      <div className="max-h-screen bg-background">
-      <Header isAdmin= {isAdmin} isLogged={isLogged} user={user || null}/>
+    <div className="max-h-screen bg-background">
+      <Header isAdmin={isAdmin} isLogged={isLogged} user={user || null} />
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
@@ -85,50 +85,50 @@ export default function ProductsPage({products, isAdmin, isLogged, user}:{produc
             />
           </div>
 
-          <Select value={selectedCategory} onValueChange={(value)=>handleFilter('category',value)}>
+          <Select value={selectedCategory} onValueChange={(value) => handleFilter('category', value)}>
             <SelectTrigger className="py-5 px-4 text-md h-11 min-w-[220px]"> {/* Aumentado */}
-                <SelectValue placeholder={t("products.category")} />
-                </SelectTrigger>
-                <SelectContent className="text-md"> {/* Aumentado */}
-                <SelectItem value="all" className="text-md py-3"> {/* Aumentado */}
-                    {t("products.all-categories")}
-                </SelectItem>
-                <SelectItem value="coffee" className="text-md py-3">
-                    {t("products.coffee-drinks")}
-                </SelectItem>
-                <SelectItem value="sweets" className="text-md py-3">
-                    {t("nav.sweets")}
-                </SelectItem>
-                <SelectItem value="drinks" className="text-md py-3">
-                    {t("nav.drinks")}
-                </SelectItem>
-                
-                </SelectContent>
-            </Select>
+              <SelectValue placeholder={t("products.category")} />
+            </SelectTrigger>
+            <SelectContent className="text-md"> {/* Aumentado */}
+              <SelectItem value="all" className="text-md py-3"> {/* Aumentado */}
+                {t("products.all-categories")}
+              </SelectItem>
+              <SelectItem value="coffee" className="text-md py-3">
+                {t("products.coffee-drinks")}
+              </SelectItem>
+              <SelectItem value="sweets" className="text-md py-3">
+                {t("nav.sweets")}
+              </SelectItem>
+              <SelectItem value="drinks" className="text-md py-3">
+                {t("nav.drinks")}
+              </SelectItem>
 
-            {/* Selector de orden - Aumentado */}
-            <Select value={sortBy} onValueChange={(value)=>handleFilter('sort',value)}>
-                <SelectTrigger className="py-5 px-4 text-md h-11 min-w-[220px]"> {/* Aumentado */}
-                <SelectValue placeholder={t("products.sort")} />
-                </SelectTrigger>
-                <SelectContent className="text-md"> {/* Aumentado */}
-                <SelectItem value="name" className="text-md py-3">
-                    {t("products.name-az")}
-                </SelectItem>
-                <SelectItem value="price-low" className="text-md py-3">
-                    {t("products.price-low")}
-                </SelectItem>
-                <SelectItem value="price-high" className="text-md py-3">
-                    {t("products.price-high")}
-                </SelectItem>
-                <SelectItem value="rating" className="text-md py-3">
-                    {t("products.rating")}
-                </SelectItem>
-                <SelectItem value="featured" className="text-md py-3">
-                    {t("products.featured")}
-                </SelectItem>
-                </SelectContent>
-            </Select>
+            </SelectContent>
+          </Select>
+
+          {/* Selector de orden - Aumentado */}
+          <Select value={sortBy} onValueChange={(value) => handleFilter('sort', value)}>
+            <SelectTrigger className="py-5 px-4 text-md h-11 min-w-[220px]"> {/* Aumentado */}
+              <SelectValue placeholder={t("products.sort")} />
+            </SelectTrigger>
+            <SelectContent className="text-md"> {/* Aumentado */}
+              <SelectItem value="name" className="text-md py-3">
+                {t("products.name-az")}
+              </SelectItem>
+              <SelectItem value="price-low" className="text-md py-3">
+                {t("products.price-low")}
+              </SelectItem>
+              <SelectItem value="price-high" className="text-md py-3">
+                {t("products.price-high")}
+              </SelectItem>
+              <SelectItem value="rating" className="text-md py-3">
+                {t("products.rating")}
+              </SelectItem>
+              <SelectItem value="featured" className="text-md py-3">
+                {t("products.featured")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
 
 
 
@@ -139,7 +139,7 @@ export default function ProductsPage({products, isAdmin, isLogged, user}:{produc
         </div>
 
         {/* Products Grid */}
-         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}
@@ -147,22 +147,24 @@ export default function ProductsPage({products, isAdmin, isLogged, user}:{produc
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">{t("products.no-results")}</p>
-            <Button
-              variant="outline"
-              className="mt-4"
-              onClick={() => {
-                setSearchTerm("")
-                setSelectedCategory("all")
-              }}
-            >
-              {t("products.clear-filters")}
-            </Button>
+            <Empty>
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <File />
+                </EmptyMedia>
+                <EmptyTitle>No productos aún</EmptyTitle>
+                <EmptyDescription>
+                  Aún no se ha creado ningún producto. Por favor espere a que se creen los productos.
+                </EmptyDescription>
+              </EmptyHeader>
+              <EmptyContent>
+              </EmptyContent>
+            </Empty>
           </div>
         )}
       </div>
       {/* Footer */}
-       <Footer/>
+      <Footer />
     </div>
   )
 }

@@ -23,7 +23,7 @@ async function main() {
             {
                 name: 'Admin User',
                 username: 'admin',
-                password: '$2b$10$EXAMPLEHASHEDPASSWORD', // En la práctica, usa bcrypt
+                password: 'Adrian12345*', // En la práctica, usa bcrypt
                 email: 'admin@pasteleria.com',
                 image: '/images/admin.jpg',
                 rol: UserRole.ADMIN,
@@ -57,86 +57,86 @@ async function main() {
     })
 
     // Crear productos
-    console.log('🎂 Creando productos...')
-    const products = await prisma.product.createMany({
-        data: [
-            {
-                name: 'Pastel de Chocolate Clásico',
-                description: 'Delicioso pastel de chocolate con crema batida y fresas',
-                price: 299.99,
-                image: '/images/chocolate-cake.jpg',
-                rating: 4.8,
-                category: 'pasteles',
-                stock: 15,
-                featured: true,
-                flavors: 'chocolate, vainilla'
-            },
-            {
-                name: 'Cheesecake de Fresa',
-                description: 'Suave cheesecake con topping de fresas naturales',
-                price: 349.50,
-                image: '/images/cheesecake-fresa.jpg',
-                rating: 4.9,
-                category: 'cheesecakes',
-                stock: 10,
-                featured: true,
-                flavors: 'queso, fresa'
-            },
-            {
-                name: 'Cupcakes Variados',
-                description: 'Set de 12 cupcakes con diferentes sabores y decoraciones',
-                price: 189.99,
-                image: '/images/cupcakes-variados.jpg',
-                rating: 4.7,
-                category: 'cupcakes',
-                stock: 25,
-                featured: false,
-                flavors: 'vainilla, chocolate, fresa'
-            },
-            {
-                name: 'Pastel de Red Velvet',
-                description: 'Elegante pastel red velvet con cream cheese frosting',
-                price: 399.00,
-                image: '/images/red-velvet.jpg',
-                rating: 4.9,
-                category: 'pasteles',
-                stock: 8,
-                featured: true,
-                flavors: 'red velvet'
-            },
-            {
-                name: 'Galletas Decoradas',
-                description: 'Paquete de 6 galletas decoradas a mano',
-                price: 129.50,
-                image: '/images/galletas-decoradas.jpg',
-                rating: 4.6,
-                category: 'galletas',
-                stock: 30,
-                featured: false,
-                flavors: 'vainilla, chocolate'
-            },
-            {
-                name: 'Tres Leches',
-                description: 'Tradicional pastel tres leches con merengue',
-                price: 279.99,
-                image: '/images/tres-leches.jpg',
-                rating: 4.8,
-                category: 'pasteles',
-                stock: 12,
-                featured: false,
-                flavors: 'tres leches, vainilla'
-            }
-        ],
-    })
+    // console.log('🎂 Creando productos...')
+    // const products = await prisma.product.createMany({
+    //     data: [
+    //         {
+    //             name: 'Pastel de Chocolate Clásico',
+    //             description: 'Delicioso pastel de chocolate con crema batida y fresas',
+    //             price: 299.99,
+    //             image: '/images/chocolate-cake.jpg',
+    //             rating: 4.8,
+    //             category: 'pasteles',
+    //             stock: 15,
+    //             featured: true,
+    //             flavors: 'chocolate, vainilla'
+    //         },
+    //         {
+    //             name: 'Cheesecake de Fresa',
+    //             description: 'Suave cheesecake con topping de fresas naturales',
+    //             price: 349.50,
+    //             image: '/images/cheesecake-fresa.jpg',
+    //             rating: 4.9,
+    //             category: 'cheesecakes',
+    //             stock: 10,
+    //             featured: true,
+    //             flavors: 'queso, fresa'
+    //         },
+    //         {
+    //             name: 'Cupcakes Variados',
+    //             description: 'Set de 12 cupcakes con diferentes sabores y decoraciones',
+    //             price: 189.99,
+    //             image: '/images/cupcakes-variados.jpg',
+    //             rating: 4.7,
+    //             category: 'cupcakes',
+    //             stock: 25,
+    //             featured: false,
+    //             flavors: 'vainilla, chocolate, fresa'
+    //         },
+    //         {
+    //             name: 'Pastel de Red Velvet',
+    //             description: 'Elegante pastel red velvet con cream cheese frosting',
+    //             price: 399.00,
+    //             image: '/images/red-velvet.jpg',
+    //             rating: 4.9,
+    //             category: 'pasteles',
+    //             stock: 8,
+    //             featured: true,
+    //             flavors: 'red velvet'
+    //         },
+    //         {
+    //             name: 'Galletas Decoradas',
+    //             description: 'Paquete de 6 galletas decoradas a mano',
+    //             price: 129.50,
+    //             image: '/images/galletas-decoradas.jpg',
+    //             rating: 4.6,
+    //             category: 'galletas',
+    //             stock: 30,
+    //             featured: false,
+    //             flavors: 'vainilla, chocolate'
+    //         },
+    //         {
+    //             name: 'Tres Leches',
+    //             description: 'Tradicional pastel tres leches con merengue',
+    //             price: 279.99,
+    //             image: '/images/tres-leches.jpg',
+    //             rating: 4.8,
+    //             category: 'pasteles',
+    //             stock: 12,
+    //             featured: false,
+    //             flavors: 'tres leches, vainilla'
+    //         }
+    //     ],
+    // })
 
-    // Obtener algunos productos para relaciones
-    const product1 = await prisma.product.findFirst({
-        where: { name: 'Pastel de Chocolate Clásico' }
-    })
+    // // Obtener algunos productos para relaciones
+    // const product1 = await prisma.product.findFirst({
+    //     where: { name: 'Pastel de Chocolate Clásico' }
+    // })
 
-    const product2 = await prisma.product.findFirst({
-        where: { name: 'Cheesecake de Fresa' }
-    })
+    // const product2 = await prisma.product.findFirst({
+    //     where: { name: 'Cheesecake de Fresa' }
+    // })
 
     // Crear trabajadores
     console.log('👨‍🍳 Creando trabajadores...')
@@ -169,80 +169,80 @@ async function main() {
         ],
     })
 
-    // Crear carritos de compra
-    console.log('🛒 Creando carritos...')
-    if (regularUser && product1 && product2) {
-        const cart = await prisma.cart.create({
-            data: {
-                userId: regularUser.id,
-                items: JSON.stringify([
-                    { productId: product1.id, quantity: 1, price: product1.price },
-                    { productId: product2.id, quantity: 2, price: product2.price }
-                ]),
-                total: product1.price + (product2.price * 2),
-                productID: product1.id
-            }
-        })
-    }
+    // // Crear carritos de compra
+    // console.log('🛒 Creando carritos...')
+    // if (regularUser && product1 && product2) {
+    //     const cart = await prisma.cart.create({
+    //         data: {
+    //             userId: regularUser.id,
+    //             items: JSON.stringify([
+    //                 { productId: product1.id, quantity: 1, price: product1.price },
+    //                 { productId: product2.id, quantity: 2, price: product2.price }
+    //             ]),
+    //             total: product1.price + (product2.price * 2),
+    //             productID: product1.id
+    //         }
+    //     })
+    // }
 
-    // Crear pedidos personalizados
-    console.log('📝 Creando pedidos personalizados...')
-    const customOrders = await prisma.customOrder.createMany({
-        data: [
-            {
-                name: 'Roberto Sánchez',
-                phone: '+52 55 4567 8901',
-                email: 'roberto@email.com',
-                flavors: 'chocolate, avellana',
-                decorations: true,
-                delivery: new Date('2024-02-15T14:00:00Z'),
-                adress: 'Av. Principal 123, Col. Centro, CDMX',
-                price: 650.00,
-                theme: 'Superhéroes',
-                type: 'pastel',
-                themeType: 'personalizado',
-                quantity: 25,
-                state: 'confirmed',
-                request: 'Incluir logo de la empresa y mensaje de felicitación'
-            },
-            {
-                name: 'Sofía Martínez',
-                phone: '+52 55 5678 9012',
-                email: 'sofia@email.com',
-                flavors: 'vainilla, fresa',
-                decorations: true,
-                delivery: new Date('2024-02-20T16:30:00Z'),
-                adress: 'Calle Secundaria 456, Col. Del Valle, CDMX',
-                price: 450.00,
-                theme: 'Princesas',
-                type: 'cupcakes',
-                quantity: 36,
-                state: 'pending',
-                request: 'Cupcakes con coronas de princesa en colores pastel'
-            },
-            {
-                name: 'Miguel Torres',
-                phone: '+52 55 6789 0123',
-                email: 'miguel@email.com',
-                flavors: 'limón, merengue',
-                decorations: false,
-                delivery: new Date('2024-02-18T12:00:00Z'),
-                adress: 'Privada Jardines 789, Col. Nápoles, CDMX',
-                price: 320.00,
-                type: 'pastel',
-                quantity: 15,
-                state: 'in_progress',
-                request: 'Pastel sin gluten, para persona diabética'
-            }
-        ],
-    })
+    // // Crear pedidos personalizados
+    // console.log('📝 Creando pedidos personalizados...')
+    // const customOrders = await prisma.customOrder.createMany({
+    //     data: [
+    //         {
+    //             name: 'Roberto Sánchez',
+    //             phone: '+52 55 4567 8901',
+    //             email: 'roberto@email.com',
+    //             flavors: 'chocolate, avellana',
+    //             decorations: true,
+    //             delivery: new Date('2024-02-15T14:00:00Z'),
+    //             adress: 'Av. Principal 123, Col. Centro, CDMX',
+    //             price: 650.00,
+    //             theme: 'Superhéroes',
+    //             type: 'pastel',
+    //             themeType: 'personalizado',
+    //             quantity: 25,
+    //             state: 'confirmed',
+    //             request: 'Incluir logo de la empresa y mensaje de felicitación'
+    //         },
+    //         {
+    //             name: 'Sofía Martínez',
+    //             phone: '+52 55 5678 9012',
+    //             email: 'sofia@email.com',
+    //             flavors: 'vainilla, fresa',
+    //             decorations: true,
+    //             delivery: new Date('2024-02-20T16:30:00Z'),
+    //             adress: 'Calle Secundaria 456, Col. Del Valle, CDMX',
+    //             price: 450.00,
+    //             theme: 'Princesas',
+    //             type: 'cupcakes',
+    //             quantity: 36,
+    //             state: 'pending',
+    //             request: 'Cupcakes con coronas de princesa en colores pastel'
+    //         },
+    //         {
+    //             name: 'Miguel Torres',
+    //             phone: '+52 55 6789 0123',
+    //             email: 'miguel@email.com',
+    //             flavors: 'limón, merengue',
+    //             decorations: false,
+    //             delivery: new Date('2024-02-18T12:00:00Z'),
+    //             adress: 'Privada Jardines 789, Col. Nápoles, CDMX',
+    //             price: 320.00,
+    //             type: 'pastel',
+    //             quantity: 15,
+    //             state: 'in_progress',
+    //             request: 'Pastel sin gluten, para persona diabética'
+    //         }
+    //     ],
+    // })
 
     console.log('✅ Seed completado exitosamente!')
     console.log('📊 Resumen:')
-    console.log(`   - ${users.count} usuarios creados`)
-    console.log(`   - ${products.count} productos creados`)
-    console.log(`   - ${workers.count} trabajadores creados`)
-    console.log(`   - ${customOrders.count} pedidos personalizados creados`)
+    // console.log(`   - ${users.count} usuarios creados`)
+    // console.log(`   - ${products.count} productos creados`)
+    // console.log(`   - ${workers.count} trabajadores creados`)
+    // console.log(`   - ${customOrders.count} pedidos personalizados creados`)
 }
 
 main()
