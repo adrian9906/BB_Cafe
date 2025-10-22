@@ -12,9 +12,9 @@ import {
 
 type DefaultSplittingTextProps = {
   motionVariants?: {
-    initial?: Record<string, any>;
-    animate?: Record<string, any>;
-    transition?: Record<string, any>;
+    initial?: TargetAndTransition;
+    animate?: TargetAndTransition;
+    transition?: TargetAndTransition['transition'];
     stagger?: number;
   };
   inView?: boolean;
