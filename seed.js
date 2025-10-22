@@ -18,118 +18,118 @@ async function main() {
 
     // Crear usuarios
     console.log('👥 Creando usuarios...')
-    const users = await prisma.user.createMany({
-        data: [
-            {
-                name: 'Admin User',
-                username: 'admin',
-                password: 'Adrian12345*', // En la práctica, usa bcrypt
-                email: 'admin@pasteleria.com',
-                image: '/images/admin.jpg',
-                rol: UserRole.ADMIN,
-            },
-            {
-                name: 'Juan Pérez',
-                username: 'juanperez',
-                password: '$2b$10$EXAMPLEHASHEDPASSWORD2',
-                email: 'juan@email.com',
-                image: '/images/juan.jpg',
-                rol: UserRole.USER,
-            },
-            {
-                name: 'María García',
-                username: 'mariag',
-                password: '$2b$10$EXAMPLEHASHEDPASSWORD3',
-                email: 'maria@email.com',
-                image: '/images/maria.jpg',
-                rol: UserRole.USER,
-            },
-        ],
-    })
-
-    // Obtener IDs de usuarios creados
-    const adminUser = await prisma.user.findUnique({
-        where: { email: 'admin@pasteleria.com' }
-    })
-
-    const regularUser = await prisma.user.findUnique({
-        where: { email: 'juan@email.com' }
-    })
-
-    // Crear productos
-    // console.log('🎂 Creando productos...')
-    // const products = await prisma.product.createMany({
+    // const users = await prisma.user.createMany({
     //     data: [
     //         {
-    //             name: 'Pastel de Chocolate Clásico',
-    //             description: 'Delicioso pastel de chocolate con crema batida y fresas',
-    //             price: 299.99,
-    //             image: '/images/chocolate-cake.jpg',
-    //             rating: 4.8,
-    //             category: 'pasteles',
-    //             stock: 15,
-    //             featured: true,
-    //             flavors: 'chocolate, vainilla'
+    //             name: 'Admin User',
+    //             username: 'admin',
+    //             password: 'Adrian12345*', // En la práctica, usa bcrypt
+    //             email: 'admin@pasteleria.com',
+    //             image: '/images/admin.jpg',
+    //             rol: UserRole.ADMIN,
     //         },
     //         {
-    //             name: 'Cheesecake de Fresa',
-    //             description: 'Suave cheesecake con topping de fresas naturales',
-    //             price: 349.50,
-    //             image: '/images/cheesecake-fresa.jpg',
-    //             rating: 4.9,
-    //             category: 'cheesecakes',
-    //             stock: 10,
-    //             featured: true,
-    //             flavors: 'queso, fresa'
+    //             name: 'Juan Pérez',
+    //             username: 'juanperez',
+    //             password: '$2b$10$EXAMPLEHASHEDPASSWORD2',
+    //             email: 'juan@email.com',
+    //             image: '/images/juan.jpg',
+    //             rol: UserRole.USER,
     //         },
     //         {
-    //             name: 'Cupcakes Variados',
-    //             description: 'Set de 12 cupcakes con diferentes sabores y decoraciones',
-    //             price: 189.99,
-    //             image: '/images/cupcakes-variados.jpg',
-    //             rating: 4.7,
-    //             category: 'cupcakes',
-    //             stock: 25,
-    //             featured: false,
-    //             flavors: 'vainilla, chocolate, fresa'
+    //             name: 'María García',
+    //             username: 'mariag',
+    //             password: '$2b$10$EXAMPLEHASHEDPASSWORD3',
+    //             email: 'maria@email.com',
+    //             image: '/images/maria.jpg',
+    //             rol: UserRole.USER,
     //         },
-    //         {
-    //             name: 'Pastel de Red Velvet',
-    //             description: 'Elegante pastel red velvet con cream cheese frosting',
-    //             price: 399.00,
-    //             image: '/images/red-velvet.jpg',
-    //             rating: 4.9,
-    //             category: 'pasteles',
-    //             stock: 8,
-    //             featured: true,
-    //             flavors: 'red velvet'
-    //         },
-    //         {
-    //             name: 'Galletas Decoradas',
-    //             description: 'Paquete de 6 galletas decoradas a mano',
-    //             price: 129.50,
-    //             image: '/images/galletas-decoradas.jpg',
-    //             rating: 4.6,
-    //             category: 'galletas',
-    //             stock: 30,
-    //             featured: false,
-    //             flavors: 'vainilla, chocolate'
-    //         },
-    //         {
-    //             name: 'Tres Leches',
-    //             description: 'Tradicional pastel tres leches con merengue',
-    //             price: 279.99,
-    //             image: '/images/tres-leches.jpg',
-    //             rating: 4.8,
-    //             category: 'pasteles',
-    //             stock: 12,
-    //             featured: false,
-    //             flavors: 'tres leches, vainilla'
-    //         }
     //     ],
     // })
 
-    // // Obtener algunos productos para relaciones
+    // // Obtener IDs de usuarios creados
+    // const adminUser = await prisma.user.findUnique({
+    //     where: { email: 'admin@pasteleria.com' }
+    // })
+
+    // const regularUser = await prisma.user.findUnique({
+    //     where: { email: 'juan@email.com' }
+    // })
+
+    // Crear productos
+    console.log('🎂 Creando productos...')
+    const products = await prisma.product.createMany({
+        data: [
+            {
+                name: 'Pastel de Chocolate Clásico',
+                description: 'Delicioso pastel de chocolate con crema batida y fresas',
+                price: 299.99,
+                image: '/images/chocolate-cake.jpg',
+                rating: 4.8,
+                category: 'pasteles',
+                stock: 15,
+                featured: true,
+                flavors: 'chocolate, vainilla'
+            },
+            {
+                name: 'Cheesecake de Fresa',
+                description: 'Suave cheesecake con topping de fresas naturales',
+                price: 349.50,
+                image: '/images/cheesecake-fresa.jpg',
+                rating: 4.9,
+                category: 'cheesecakes',
+                stock: 10,
+                featured: true,
+                flavors: 'queso, fresa'
+            },
+            {
+                name: 'Cupcakes Variados',
+                description: 'Set de 12 cupcakes con diferentes sabores y decoraciones',
+                price: 189.99,
+                image: '/images/cupcakes-variados.jpg',
+                rating: 4.7,
+                category: 'cupcakes',
+                stock: 25,
+                featured: false,
+                flavors: 'vainilla, chocolate, fresa'
+            },
+            {
+                name: 'Pastel de Red Velvet',
+                description: 'Elegante pastel red velvet con cream cheese frosting',
+                price: 399.00,
+                image: '/images/red-velvet.jpg',
+                rating: 4.9,
+                category: 'pasteles',
+                stock: 8,
+                featured: true,
+                flavors: 'red velvet'
+            },
+            {
+                name: 'Galletas Decoradas',
+                description: 'Paquete de 6 galletas decoradas a mano',
+                price: 129.50,
+                image: '/images/galletas-decoradas.jpg',
+                rating: 4.6,
+                category: 'galletas',
+                stock: 30,
+                featured: false,
+                flavors: 'vainilla, chocolate'
+            },
+            {
+                name: 'Tres Leches',
+                description: 'Tradicional pastel tres leches con merengue',
+                price: 279.99,
+                image: '/images/tres-leches.jpg',
+                rating: 4.8,
+                category: 'pasteles',
+                stock: 12,
+                featured: false,
+                flavors: 'tres leches, vainilla'
+            }
+        ],
+    })
+
+    // Obtener algunos productos para relaciones
     // const product1 = await prisma.product.findFirst({
     //     where: { name: 'Pastel de Chocolate Clásico' }
     // })
@@ -139,35 +139,35 @@ async function main() {
     // })
 
     // Crear trabajadores
-    console.log('👨‍🍳 Creando trabajadores...')
-    const workers = await prisma.workers.createMany({
-        data: [
-            {
-                name: 'Ana Rodríguez',
-                position: 'Pastelera Principal',
-                description: 'Especialista en pasteles de boda y eventos especiales con 10 años de experiencia',
-                image: '/images/ana-rodriguez.jpg',
-                email: 'ana@pasteleria.com',
-                phone: '+52 55 1234 5678'
-            },
-            {
-                name: 'Carlos Mendoza',
-                position: 'Chef Repostero',
-                description: 'Experto en técnicas francesas y decoración avanzada',
-                image: '/images/carlos-mendoza.jpg',
-                email: 'carlos@pasteleria.com',
-                phone: '+52 55 2345 6789'
-            },
-            {
-                name: 'Laura Hernández',
-                position: 'Decoradora',
-                description: 'Artista especializada en decoración con fondant y chocolate',
-                image: '/images/laura-hernandez.jpg',
-                email: 'laura@pasteleria.com',
-                phone: '+52 55 3456 7890'
-            }
-        ],
-    })
+    // console.log('👨‍🍳 Creando trabajadores...')
+    // const workers = await prisma.workers.createMany({
+    //     data: [
+    //         {
+    //             name: 'Ana Rodríguez',
+    //             position: 'Pastelera Principal',
+    //             description: 'Especialista en pasteles de boda y eventos especiales con 10 años de experiencia',
+    //             image: '/images/ana-rodriguez.jpg',
+    //             email: 'ana@pasteleria.com',
+    //             phone: '+52 55 1234 5678'
+    //         },
+    //         {
+    //             name: 'Carlos Mendoza',
+    //             position: 'Chef Repostero',
+    //             description: 'Experto en técnicas francesas y decoración avanzada',
+    //             image: '/images/carlos-mendoza.jpg',
+    //             email: 'carlos@pasteleria.com',
+    //             phone: '+52 55 2345 6789'
+    //         },
+    //         {
+    //             name: 'Laura Hernández',
+    //             position: 'Decoradora',
+    //             description: 'Artista especializada en decoración con fondant y chocolate',
+    //             image: '/images/laura-hernandez.jpg',
+    //             email: 'laura@pasteleria.com',
+    //             phone: '+52 55 3456 7890'
+    //         }
+    //     ],
+    // })
 
     // // Crear carritos de compra
     // console.log('🛒 Creando carritos...')
