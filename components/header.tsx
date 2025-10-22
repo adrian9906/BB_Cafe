@@ -13,7 +13,7 @@ import { useCart } from "./cart/cart-provider"
 import { UserProps } from "@/app/(landing)/page"
 import { UserAccountNav } from "./userNavComponent"
 
-export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLogged:boolean, user: UserProps | null}) {
+export default function Header({ isAdmin, isLogged, user }: { isAdmin: boolean, isLogged: boolean, user: UserProps | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { items } = useCart()
   const { t } = useLanguage()
@@ -82,8 +82,8 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
             <div className="flex items-center gap-3">
               <ThemeToggle />
               <LanguageToggle />
-              <UserAccountNav user={user}/>
-            
+              <UserAccountNav user={user} />
+
               {/* Mobile Menu Button */}
               <Button
                 variant="ghost"
@@ -181,8 +181,8 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
             <LanguageToggle />
             <ThemeToggle />
 
-             {isLogged && (
-              <UserAccountNav user={user}/>
+            {isLogged && (
+              <UserAccountNav user={user} />
             )}
 
             <Button asChild variant="outline" className="relative">
@@ -219,22 +219,11 @@ export default function Header({isAdmin, isLogged, user}:{isAdmin:boolean, isLog
               >
                 {t("nav.products")}
               </Link>
-              <Link
-                href="/products?category=coffee"
-                className="text-muted-foreground hover:text-amber-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("nav.drinks")}
+              <Link href="/products" className="text-foreground hover:text-amber-600 transition-colors">
+                {t("nav.products")}
               </Link>
               <Link
-                href="/products?category=sweets"
-                className="text-muted-foreground hover:text-amber-600 transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("nav.sweets")}
-              </Link>
-              <Link
-                href="/custom-orders"
+                href="/order"
                 className="text-muted-foreground hover:text-amber-600 transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
